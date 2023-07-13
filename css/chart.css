@@ -22,14 +22,21 @@ body{
     
     .line {
       fill: none;
-      stroke: red;
+      stroke: blue;
       stroke-width: 3px;
     }
-    .line2 {
-      fill: none;
+    #chart_line0 {
       stroke: greenyellow;
-      stroke-width: 3px;
+    }
+    #chart_line0 {
+      stroke: red;
     }
     .graph-svg-component {
         background-color: green;
     }    
+
+  .grid-line line {
+      stroke: blue;
+      stroke-opacity: 0.2;
+  }
+

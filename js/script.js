@@ -9,7 +9,8 @@ const transition_duration = 100;
 const margin = { top: 40, right: 40, bottom: 40, left: 40 },
   width = 0.9 * window.innerWidth - margin.left - margin.right,
   height = 0.9 * window.innerHeight - margin.top - margin.bottom;
-const tick_num = { left: 3, right: null, bottom: 7 };
+const tick_num = { left: 3, right: null, bottom: 7 },
+  d3_time_format = '%H:%M:%S';
 
 //init chart
 
@@ -60,7 +61,7 @@ function update_data(new_event) {
     let _arr = hist_data[i];
     hist_data[i].push(_arr[_arr.length - 1]);
   }
-
+  update_chart(svg,hist_data, x,y,y1,x_axis,y_axis,y_axis1,width,height,time_range,value_range,d3_time_format,1000);
   //let added_charts = hist_data.length - n_charts.n;
   // n_charts = {'n':hist_data.length,'added':added_charts}
 }

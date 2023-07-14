@@ -1,42 +1,52 @@
-body{
-    background-color: #222;
-    font-family: arial, sans-serif;
-    font-size: 20px;  
-    padding: 10px;
-    }
-    
-    .axis {
-      font: 10px sans-serif;
-    }
-    
-    .axis text{
-    /*   stroke:tomato;
-      stroke-width : 1;   */
-    }
-    .axis path,
-    .axis line {
-      fill: none;
-    /*   stroke: tomato; */
-      shape-rendering: crispEdges;
-    }
-    
-    .line {
-      fill: none;
-      stroke: blue;
-      stroke-width: 3px;
-    }
-    #chart_line0 {
-      stroke: greenyellow;
-    }
-    #chart_line0 {
-      stroke: red;
-    }
-    .graph-svg-component {
-        background-color: green;
-    }    
+body {
+  background-color: #222;
+  font-family: arial, sans-serif;
+  font-size: 20px;
+  padding: 10px;
+}
 
-  .grid-line line {
-      stroke: blue;
-      stroke-opacity: 0.2;
-  }
+.axis {
+  font: 10px sans-serif;
+}
 
+/* 
+.axis text {
+   stroke:tomato;
+      stroke-width : 1;  
+} 
+.axis path,
+.axis line {
+  fill: red;
+    stroke: tomato; 
+  shape-rendering: crispEdges;
+}
+*/
+.line {
+  fill: none;
+  stroke-width: 2px;
+}
+#chart_line0 {
+  stroke: blue;
+}
+#chart_line1 {
+  stroke: red;
+}
+.graph-svg-component {
+  background-color: whitesmoke;
+}
+
+.grid-line line {
+  stroke: blue;
+  stroke-opacity: 0.2;
+}
+
+#chart_botton_text {
+  font-family: sans-serif;
+  fill: blue;
+  font-size: 20px;
+}
+#chart_top_text {
+  font-family: sans-serif;
+  fill: blue;
+  font-size: 20px;
+}

@@ -1,5 +1,6 @@
-function init_chart(el_selector, margin, width, height, tick_num) {
-  var svg = d3
+function init_chart(el_selector, margin, width, height, tick_num,chart_title_text) {
+//add chart
+    var svg = d3
     .select(el_selector)
     .append('svg')
     .attr('class', 'graph-svg-component')
@@ -7,7 +8,7 @@ function init_chart(el_selector, margin, width, height, tick_num) {
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
+//add bottom text
   svg
     .append('text')
     .attr('id', 'chart_botton_text')
@@ -17,15 +18,14 @@ function init_chart(el_selector, margin, width, height, tick_num) {
       'translate(' + width / 2 + ',' + (height - (margin.bottom - 74)) + ')'
     )
     .text('Date');
-
   //  Chart Title
   svg
     .append('text')
     .attr('x', width / 2)
-    .attr('y', 20 - margin.top / 2)
+    .attr('y', -margin.top/3)
     .attr('text-anchor', 'middle')
     .attr('id', 'chart_top_text')
-    .text('Pizza consumption');
+    .text(chart_title_text);
   // init axes
   var x = d3.scaleLinear().range([0, width]),
     y = d3.scaleLinear().range([height, 0]),
@@ -34,7 +34,8 @@ function init_chart(el_selector, margin, width, height, tick_num) {
   var y_axis = d3.axisLeft(y).ticks(tick_num.left),
     y_axis1 = d3.axisRight(y1).ticks(tick_num.right);
 
-  var x_axis = d3.axisBottom(x).ticks(tick_num.bottom);
+    var x_axis = d3.axisBottom(x).ticks(tick_num.bottom);
+      // add axes
   svg
     .append('g')
     .attr('class', 'axis axis--x')
@@ -48,12 +49,13 @@ function init_chart(el_selector, margin, width, height, tick_num) {
     .attr('class', 'axis axis--y1')
     .attr('transform', 'translate(' + width + ',0)')
     .call(y_axis1);
-
+  // add grid
   const xAxisGrid = d3
     .axisBottom(x)
     .tickSize(-height)
     .tickFormat('')
-    .ticks(tick_num.bottom);
+        .ticks(tick_num.bottom);
+    
   const yAxisGrid = d3
     .axisLeft(y)
     .tickSize(-width)
@@ -78,7 +80,7 @@ function init_chart(el_selector, margin, width, height, tick_num) {
 }
 
 function update_chart(
-  d3_svg,
+  svg,
   dataset,
   x,
   y,
@@ -89,22 +91,17 @@ function update_chart(
   width,
   height,
   time_range,
-    value_range,
-    d3_time_format,
+  value_range,
+  d3_time_format,
   transition_duration
 ) {
-  var svg = d3_svg;
-
   //Parsers and Formaters
-  //var parseTime = d3.timeParse('%d/%m/%Y');
-    var formatTime = d3.timeFormat(d3_time_format),
-        date_format = d3.timeFormat('%d/%m/%Y');
-
-  // Scales
-
+  var formatTime = d3.timeFormat(d3_time_format),
+    date_format = d3.timeFormat('%d/%m/%Y');
+  // Scales (apply real values range and update axes)
   x.domain([time_range[0], time_range[1]]);
   x_axis.tickFormat(function (d) {
-    let date = new Date(d * 1000);
+    let date = new Date(d * 1000);//convert milliseconds to string
     return formatTime(date);
   });
 
@@ -114,7 +111,7 @@ function update_chart(
     .duration(transition_duration)
     .call(x_axis);
 
-  // create the Y axis
+
   y.domain([value_range[0], value_range[1]]);
   svg
     .selectAll('.axis--y0')
@@ -132,13 +129,12 @@ function update_chart(
     .line()
     .x(function (d) {
       return x(d.time);
-    })
-    //.x(function(d) { return x(parseTime(d.date)); })
+    })//.x(function(d) { return x(parseTime(d.date)); })
     .y(function (d) {
       return y(d.value);
     });
 
-  //Draw a grid
+  //reDraw a grid
   const xAxisGrid = d3
     .axisBottom(x)
     .tickSize(-height)
@@ -155,8 +151,9 @@ function update_chart(
     .transition()
     .duration(transition_duration)
     .call(xAxisGrid);
+    
   svg
-    .select('.y-grid') // change the x axis
+    .select('.y-grid') // change the y axis
     .transition()
     .duration(transition_duration)
     .call(yAxisGrid);
@@ -168,7 +165,7 @@ function update_chart(
 
     let u = svg.selectAll('#' + chart_id).data([dataset[i]]);
 
-    // Updata the line
+    // Update the line
     u.enter()
       .append('path')
       .attr('class', 'line')
@@ -177,12 +174,11 @@ function update_chart(
       .duration(transition_duration)
       .attr('d', line)
       .attr('id', chart_id);
-    }
-    
-
-    svg
+  }
+// Update the bottom text as last tick date
+  svg
     .selectAll('#chart_botton_text')
     .transition()
     .duration(transition_duration)
-    .text(date_format( new Date(time_range[1] * 1000) ));
+    .text(date_format(new Date(time_range[1] * 1000)));
 }

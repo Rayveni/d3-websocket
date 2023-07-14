@@ -4,26 +4,26 @@ body {
   font-size: 20px;
   padding: 10px;
 }
-
+/* стиль всех осей,при необходимости можно задать стиль для каждой(axis--x,axis--y0,axis--y1) */
 .axis {
   font: 10px sans-serif;
+  /*stroke:tomato;        
+  stroke-width : 1; */
 }
-
+/* рисок*/
 /* 
-.axis text {
-   stroke:tomato;
-      stroke-width : 1;  
-} 
-.axis path,
 .axis line {
   fill: red;
     stroke: tomato; 
   shape-rendering: crispEdges;
+  stroke-width : 2
 }
 */
+
 .line {
   fill: none;
   stroke-width: 2px;
+  stroke: black;/* значение по умолчанию для графика*/
 }
 #chart_line0 {
   stroke: blue;
@@ -34,7 +34,7 @@ body {
 .graph-svg-component {
   background-color: whitesmoke;
 }
-
+/* стиль сетки*/
 .grid-line line {
   stroke: blue;
   stroke-opacity: 0.2;

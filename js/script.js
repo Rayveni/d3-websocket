@@ -1,6 +1,8 @@
 var hist_data = [[]],
   time_range = null,
-  value_range = null;
+  value_range = null,
+  cold_start_flg=true//после обработки 1го сообшения меняется на false
+  ;
 
 
 const connection = new WebSocket('ws://signal.mmr.systems:8080');
@@ -46,14 +48,19 @@ function update_data(new_event) {
       Math.max(value_range[1], event_value_range[1]),
     ];
   }
-
-  for (let i = 0; i < values.length - hist_data.length; i++) {
+  
+  let hist_data_len = hist_data.length;
+ 
+  for (let i = 0; i < values.length - hist_data_len; i++) {
     hist_data.push([]);
   }
+  
   for (let i = 0; i < values.length; i++) {
+    //console.log(values,i,event_time)
     hist_data[i].push({ time: event_time, value: values[i] });
   }
   //При уменьшении количества данных нужно использовать старые данных вместо недостающих значений.
+
   for (let i = values.length; i < hist_data.length; i++) {
     let _arr = hist_data[i];
     hist_data[i].push({ time: event_time, value: _arr[_arr.length - 1].value });

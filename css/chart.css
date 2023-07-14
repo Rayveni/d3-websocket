@@ -31,6 +31,9 @@ body {
 #chart_line1 {
   stroke: red;
 }
+#chart_line2 {
+  stroke: green;
+}
 .graph-svg-component {
   background-color: whitesmoke;
 }
